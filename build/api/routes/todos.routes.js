@@ -22,16 +22,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const app_1 = __importDefault(require("./app"));
-const dotenv_1 = __importDefault(require("dotenv"));
-const db = __importStar(require("./data/database"));
-dotenv_1.default.config();
-const port = process.env.PORT || 5000;
-app_1.default.listen(port, () => {
-    console.log(`Listening: http://localhost:${port}`);
-});
-db.databaseConnection();
+const express_1 = require("express");
+const todosController = __importStar(require("../../controllers/todos.controller"));
+const router = (0, express_1.Router)();
+router.get("/", todosController.getTodos);
+router.get("/:id", todosController.getTodo);
+router.post("/", todosController.insertTodo);
+router.put("/:id", todosController.updateTodo);
+exports.default = router;
